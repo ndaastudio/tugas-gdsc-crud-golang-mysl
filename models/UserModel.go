@@ -65,3 +65,14 @@ func UpdateUser(id int, user *Schema) error {
 
 	return nil
 }
+
+func DeleteUser(id int) error {
+	db := connection.GetDB()
+
+	_, err := db.Exec("DELETE FROM users WHERE id = ?", id)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
