@@ -42,3 +42,15 @@ func GetUsers() ([]Schema, error) {
 
 	return users, nil
 }
+
+func GetUserByID(id int) (Schema, error) {
+	var user Schema
+	db := connection.GetDB()
+
+	err := db.QueryRow("SELECT * FROM users WHERE id = ?", id).Scan(&user.ID, &user.Nama, &user.Umur)
+	if err != nil {
+		return user, err
+	}
+
+	return user, nil
+}
