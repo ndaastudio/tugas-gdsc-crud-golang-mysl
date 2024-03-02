@@ -20,3 +20,25 @@ func CreateUser(user *Schema) error {
 
 	return nil
 }
+
+func GetUsers() ([]Schema, error) {
+	var users []Schema
+	db := connection.GetDB()
+
+	rows, err := db.Query("SELECT * FROM users")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var user Schema
+		err := rows.Scan(&user.ID, &user.Nama, &user.Umur)
+		if err != nil {
+			return nil, err
+		}
+		users = append(users, user)
+	}
+
+	return users, nil
+}
