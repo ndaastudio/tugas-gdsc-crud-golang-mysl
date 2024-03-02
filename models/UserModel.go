@@ -54,3 +54,14 @@ func GetUserByID(id int) (Schema, error) {
 
 	return user, nil
 }
+
+func UpdateUser(id int, user *Schema) error {
+	db := connection.GetDB()
+
+	_, err := db.Exec("UPDATE users SET nama = ?, umur = ? WHERE id = ?", user.Nama, user.Umur, id)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
